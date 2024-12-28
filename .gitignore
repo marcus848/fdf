@@ -1,0 +1,13 @@
+# Objs e binários
+libft/obj/
+libft/libft.a
+bin/
+obj/
+
+# Arquivos temporários
+*.o
+*.swp
+*.tmp
+
+# Logs
+*.log
