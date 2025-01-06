@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:21:19 by marcudos          #+#    #+#             */
-/*   Updated: 2024/12/17 20:28:34 by marcudos         ###   ########.fr       */
+/*   Updated: 2024/12/20 14:49:26 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 # define SPECIFIERS "cspdiuxX%"
 # define FLAGS "-0#+ "
-# include "ft_list.h"
-# include "libft.h"
+# include "libc.h"
 
 typedef struct s_specifier
 {
