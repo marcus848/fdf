@@ -72,7 +72,8 @@ re: fclean all
 
 # ======== TESTES ========
 # Lista de arquivos de teste
-FILES_TESTS = started_mlx.c pixel_put.c my_pixel_put.c
+FILES_TESTS = started_mlx.c pixel_put.c my_pixel_put.c triangulo.c events_init.c key_hook.c mouse_hook.c move_hook.c \
+	      close_window.c paint.c loop_hook.c sync.c 
 SRC_TESTS = $(addprefix $(TESTS)/, $(FILES_TESTS))
 OBJ_TESTS = $(addprefix $(OBJ_DIR)/, $(FILES_TESTS:.c=.o))
 BIN_TESTS = $(addprefix $(BIN_DIR)/, $(FILES_TESTS:.c=))
