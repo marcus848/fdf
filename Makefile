@@ -1,5 +1,5 @@
 # Compilador e flags
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 NODIR = --no-print-directory
 # Diretórios
