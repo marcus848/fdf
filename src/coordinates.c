@@ -1,39 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_fdf.c                                         :+:      :+:    :+:   */
+/*   coordinates.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 18:10:56 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/14 16:42:40 by marcudos         ###   ########.fr       */
+/*   Created: 2025/01/14 16:02:09 by marcudos          #+#    #+#             */
+/*   Updated: 2025/01/14 19:04:52 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
-#include <fcntl.h>
-#include <stdlib.h>
 
-t_fdf	*init_fdf(char *file_name)
-{
-	t_fdf	*fdf;
-	int		fd;
-
-	fd = open(file_name, O_RDONLY);
-	if (fd < 0)
-		error(1);
-	fdf = malloc(sizeof(t_fdf*));
-	fdf->map = make_coordinates(fd);
-	
-	return (fdf);
-}
-
-t_map	*init_map(void)
+t_map	*make_coordinates(int fd)
 {
 	t_map	*map;
+	char	*line;
+	char	**split;
 
-	map->coordinate = NULL;
-	map->max_x = 0;
-	map->max_y = 0;
-	return (map);
+	map = init_map();
+	line = get_next_line(fd);
+	while (line)
+	{
+		line = get_next_line(fd);
+		split = ft_split(line, ' ');
+		if (!map->max_x)
+			map->max_x = count_x(split);
+		else if (count_x(split) != map->max_x)
+			error(3);
+	}
+		
+}
+
+int	count_x(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		i++;
+	}
+	return i;
 }

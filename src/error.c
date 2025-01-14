@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_fdf.c                                         :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 18:10:56 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/14 16:42:40 by marcudos         ###   ########.fr       */
+/*   Created: 2025/01/14 16:39:07 by marcudos          #+#    #+#             */
+/*   Updated: 2025/01/14 16:40:51 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
-#include <fcntl.h>
-#include <stdlib.h>
 
-t_fdf	*init_fdf(char *file_name)
+void	error(int erro)
 {
-	t_fdf	*fdf;
-	int		fd;
-
-	fd = open(file_name, O_RDONLY);
-	if (fd < 0)
-		error(1);
-	fdf = malloc(sizeof(t_fdf*));
-	fdf->map = make_coordinates(fd);
-	
-	return (fdf);
-}
-
-t_map	*init_map(void)
-{
-	t_map	*map;
-
-	map->coordinate = NULL;
-	map->max_x = 0;
-	map->max_y = 0;
-	return (map);
+	if (erro == 1)
+		ft_printf("Message 1");
+	if (erro == 2)
+		ft_printf("Message 2");
+	if (erro == 3)
+		ft_printf("Message 3");
+	if (erro == 4)
+		ft_printf("Message 4");
+	if (erro == 5)
+		ft_printf("Message 5");
+	exit (1);
 }

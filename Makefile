@@ -83,12 +83,11 @@ tests: $(BIN_TESTS)
 
 # Regra para compilar cada binário de teste
 $(BIN_DIR)/%: $(OBJ_DIR)/%.o $(LIBFT) $(MLX) | $(BIN_DIR)
-	@echo "$(YELLOW)>>> Compilando binarios teste: $@$(RESET)"
+	@echo "$(YELLOW)>>> Compilando $@...$(RESET)"
 	@$(CC) -g -o $@_test $< $(LIBS)
 
 # Regra para compilar objetos dos testes
 $(OBJ_DIR)/%.o: $(TESTS)/%.c | $(OBJ_DIR)
-	@echo "$(YELLOW)>>> Compilando objetos teste: $@$(RESET)"
 	@$(CC) -I$(INCLUDE_DIR) -I$(MLX_DIR) -c $< -o $@
 
 # Criação dos diretórios necessários

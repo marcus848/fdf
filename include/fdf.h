@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 18:08:47 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/13 18:45:09 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:50:33 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_point
 typedef struct s_map
 {
 	int	**coordinate;
+	int	max_x;
+	int	max_y;
 }	t_map;
 
 typedef struct s_fdf
@@ -48,5 +50,13 @@ typedef struct s_fdf
 
 // init_fdf
 t_fdf	*init_fdf(char *file_name);
+t_map	*init_map(void);
+
+// coordinates
+t_map	*make_coordinates(int fd);
+int	count_x(char **split);
+
+// error
+void	error(int erro);
 
 #endif
