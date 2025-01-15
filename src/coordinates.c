@@ -12,24 +12,21 @@
 
 #include "../include/fdf.h"
 
-t_map	*make_coordinates(int fd)
+t_map	*make_map(int fd)
 {
 	t_map	*map;
 	char	*line;
 	char	**split;
 
 	map = init_map();
-	line = get_next_line(fd);
+	line = ft_strdup("");;
 	while (line)
 	{
+		free(line);
 		line = get_next_line(fd);
 		split = ft_split(line, ' ');
-		if (!map->max_x)
-			map->max_x = count_x(split);
-		else if (count_x(split) != map->max_x)
-			error(3);
 	}
-		
+	return (map);	
 }
 
 int	count_x(char **split)

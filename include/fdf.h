@@ -34,7 +34,7 @@ typedef struct s_point
 
 typedef struct s_map
 {
-	int	**coordinate;
+	int	**coordinates;
 	int	max_x;
 	int	max_y;
 }	t_map;
@@ -53,10 +53,13 @@ t_fdf	*init_fdf(char *file_name);
 t_map	*init_map(void);
 
 // coordinates
-t_map	*make_coordinates(int fd);
+t_map	*make_map(int fd);
 int	count_x(char **split);
 
 // error
 void	error(int erro);
+
+// init_utils
+t_point	**get_points(char **split, int size, int y);
 
 #endif

@@ -1,26 +1,32 @@
-# Compilador e flags
-CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
-NODIR = --no-print-directory
-# Diretórios
-LIBFT_DIR = libft
-MLX_DIR = mlx
-TESTS = tests
-OBJ_DIR = obj
-BIN_DIR = bin
-INCLUDE_DIR = $(LIBFT_DIR)/include
-
-# Arquivos fonte e objeto
-SRC = tests/minilibx.c
-OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
-
-# Nome do executável principal
+# Name
 NAME = fdf
 
-# Bibliotecas
+# Compile and Flags
+CC = cc
+CFLAGS = -Wall -Werror -Wextra
+NODIR = --no-print-directory
+INCLUDE = -Iinclude -lm -lXext -lX11
+
+# Dirs
+SRC_DIR = src
+OBJ_DIR = obj
+LIBFT_DIR = libft
+MLX_DIR = mlx
+TESTS_DIR = tests
+BIN_DIR = bin
+APP_DIR = app
+
+# Libs
 LIBFT = $(LIBFT_DIR)/libft.a
 MLX = $(MLX_DIR)/libmlx.a
-LIBS = -L$(LIBFT_DIR) -L$(MLX_DIR) -lft -lmlx -lm -lX11 -lXext
+
+SRCS = $(SRC_DIR)/main.c \
+       $(SRC_DIR)/init_structs.c \
+       $(SRC_DIR)/init_utils.c \
+       $(SRC_DIR)/error.c \
+       $(SRC_DIR)/coordinates.c
+
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Colors
 RESET   = \033[0m
@@ -32,49 +38,46 @@ MAGENTA = \033[35m
 CYAN    = \033[36m
 WHITE   = \033[37m
 
-# Regras para o executável principal
-all: $(NAME)
+all: $(OBJ_DIR) $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBS)
-	@echo "$(GREEN)$(NAME) compilado com sucesso!$(RESET)"
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(INCLUDE) -o $(NAME)
+	@echo "$(GREEN)Done!$(RESET)"
 
-$(OBJ_DIR)/%.o: $(TESTS)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -I$(MLX_DIR) -c $< -o $@
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -Iinclude -I$(LIBFT_DIR) -I$(MLX_DIR) -c $< -o $@
 
 $(LIBFT):
-	@echo "$(CYAN)Compilando Libft...$(RESET)"
-	@make -C $(LIBFT_DIR) $(NODIR) 
+	@echo "Building libft..."
+	@make -C $(LIBFT_DIR) $(NODIR)
 
 $(MLX):
-	@echo "$(CYAN)Compilando MLX...$(RESET)"
-	@make -C $(MLX_DIR) > .mlx_mensages 2>&1
-	@echo "$(GREEN)MLX compilado com sucesso$(RESET)"
+	@echo "Building MLX..."
+	@make -C $(MLX_DIR)
 
 clean:
-	@echo "$(YELLOW)Clean LIBFT...$(RESET)"
-	@make clean -C $(LIBFT_DIR) $(NODIR)
-	@echo "$(YELLOW)Clean MLX...$(RESET)"
-	@make clean -C $(MLX_DIR) $(NODIR) > .mlx_mensages 2>&1
-	@rm -f $(OBJ)
+	@echo "Cleaning up object files..."
 	@rm -rf $(OBJ_DIR)
-	@echo "$(CYAN)Objetos removidos.$(RESET)"
+	@make clean -C $(LIBFT_DIR) 
+	@make clean -C $(MLX_DIR)
 
 fclean: clean
-	@rm -f $(LIBFT) 
+	@echo "Removing binary..."
 	@rm -f $(NAME)
-	@rm -rf $(BIN_DIR)
-	@echo "$(GREEN)$(NAME) removido!$(RESET)"
+	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re tests tests_clean tests_re
+.PHONY: all clean fclean re
 
 # ======== TESTES ========
 # Lista de arquivos de teste
 FILES_TESTS = started_mlx.c pixel_put.c my_pixel_put.c triangulo.c events_init.c key_hook.c mouse_hook.c move_hook.c \
 	      close_window.c paint.c loop_hook.c sync.c 
-SRC_TESTS = $(addprefix $(TESTS)/, $(FILES_TESTS))
+SRC_TESTS = $(addprefix $(TESTS_DIR)/, $(FILES_TESTS))
 OBJ_TESTS = $(addprefix $(OBJ_DIR)/, $(FILES_TESTS:.c=.o))
 BIN_TESTS = $(addprefix $(BIN_DIR)/, $(FILES_TESTS:.c=))
 
@@ -84,25 +87,19 @@ tests: $(BIN_TESTS)
 # Regra para compilar cada binário de teste
 $(BIN_DIR)/%: $(OBJ_DIR)/%.o $(LIBFT) $(MLX) | $(BIN_DIR)
 	@echo "$(YELLOW)>>> Compilando $@...$(RESET)"
-	@$(CC) -g -o $@_test $< $(LIBS)
+	@$(CC) -g -o $@_test $< $(LIBFT) $(MLX) $(INCLUDE)
 
 # Regra para compilar objetos dos testes
-$(OBJ_DIR)/%.o: $(TESTS)/%.c | $(OBJ_DIR)
-	@$(CC) -I$(INCLUDE_DIR) -I$(MLX_DIR) -c $< -o $@
-
-# Criação dos diretórios necessários
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(TESTS_DIR)/%.c | $(OBJ_DIR)
+	@$(CC) -I$(LIBFT_DIR)/include -I$(MLX_DIR) -c $< -o $@
 
 $(BIN_DIR):
 	@mkdir -p $(BIN_DIR)
 
 # Limpeza dos arquivos de teste
 tests_clean:
-	@rm -f $(OBJ_TESTS)
-	@rm -f $(BIN_TESTS)
+	@rm -f $(BIN_DIR)/*test
 	@echo "$(CYAN)Clean Tests$(RESET)"
 
 tests_re: tests_clean tests
-
 

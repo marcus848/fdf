@@ -12,4 +12,32 @@
 
 #include "../include/fdf.h"
 
-t_point	
+t_point	**get_points(char **split, int size, int y)
+{
+	t_point	**points;
+	char	**point;
+	int		i;
+
+	points = malloc(sizeof(t_point *) * size);
+	if (!points)
+		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		points[i] = malloc(sizeof(t_point *));
+		if (!points[i])
+		{
+			while (i > 0)
+				free(points[--i]);
+			free(points);
+			return (NULL);
+		}
+		point = ft_split(split[i], ',');
+		points[i]->x = i + 1;
+		points[i]->y = y;
+		points[i]->z = ft_atoi(point[0]);
+		points[i]->color = ft_atoi(point[1]);
+		i++;
+	}
+	return (points);
+}

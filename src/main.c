@@ -16,9 +16,9 @@ int	main(int ac, char **av)
 {
 	char	*file_name;
 	t_fdf	*fdf;
-
 	if (ac != 2)
 		exit(1);
-	fdf = init_fdf(av[1]);	
+	file_name = av[1];
+	fdf = init_fdf(file_name);	
 	
 }
