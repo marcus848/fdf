@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 18:08:47 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/14 16:50:33 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:51:26 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_map	*init_map(void);
 // coordinates
 t_map	*make_map(int fd);
 int	count_arrays(void **array);
+int	process_line(t_map *map, char *line, int y);
 
 // error
 void	error(int erro);
@@ -62,6 +63,11 @@ void	free_points(t_point **points, int size);
 
 // init_utils
 t_point	**get_points(char **split, int size, int y);
-void	print_points(t_point **points, int size);
+void	print_points(t_point **points, int columns);
+
+// free
+void	free_tokens(char **tokens);
+void	free_map(t_map *map);
+
 
 #endif

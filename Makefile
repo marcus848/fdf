@@ -24,7 +24,7 @@ MLX = $(MLX_DIR)/libmlx.a
 TEMP_MEN = .mensages
 
 # FILES
-FILES = main.c init_structs.c init_utils.c error.c coordinates.c
+FILES = main.c init_structs.c init_utils.c error.c coordinates.c free.c
 SRCS = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

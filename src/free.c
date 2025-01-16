@@ -1,29 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 19:18:15 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/16 16:34:05 by marcudos         ###   ########.fr       */
+/*   Created: 2025/01/16 14:39:47 by marcudos          #+#    #+#             */
+/*   Updated: 2025/01/16 16:51:19 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "../include/fdf.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000
-# endif
+void	free_map(t_map *map)
+{
+	if (map->coordinates)
+		free(map->coordinates);
+	free(map);
+}
 
-# include "libs.h"
-# include "ft_string.h"
-# include "ft_memory.h"
+void	free_tokens(char **tokens)
+{
+	int	i;
 
-char	*get_next_line(int fd);
-char	*find_next_line(char *line);
-char	*find_current_line(char *line);
-char	*get_full_line(int fd, char *line);
+	i = 0;
+	while (tokens[i])
+	{
+		free(tokens[i]);
+		i++;
+	}
+	free(tokens);
+}
 
-#endif
+void	free_points(t_point **points, int size)
+{
+	int	i;
+
+	i = 0;
+	if (points)
+	{
+		while (i < size)
+		{
+			free(points[i]);
+			i++;
+		}
+		free(points);
+	}
+}

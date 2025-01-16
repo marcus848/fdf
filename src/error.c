@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:39:07 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/14 16:40:51 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:09:20 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,4 @@ void	error(int erro)
 	if (erro == 5)
 		ft_printf("Message 5");
 	exit (1);
-}
-
-void	free_points(t_point **points, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-		free(points[i++]);
-	free(points);
-	*points = NULL;
 }

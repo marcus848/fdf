@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_fdf.c                                         :+:      :+:    :+:   */
+/*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:10:56 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/14 16:42:40 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:52:14 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,17 @@ t_fdf	*init_fdf(char *file_name)
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 		error(1);
-	fdf = malloc(sizeof(t_fdf*));
-
+	fdf = malloc(sizeof(t_fdf));
+	if (!fdf)
+		return (NULL);
 	fdf->map = make_map(fd);
 	if (!fdf->map)
 	{
+		close(fd);
 		free(fdf);
 		error(1);
 	}
-	
+	free(fdf->map);
 	return (fdf);
 }
 
