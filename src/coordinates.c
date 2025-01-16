@@ -15,13 +15,13 @@
 t_map	*make_map(int fd)
 {
 	t_map	*map;
-	t_point **points;
+	t_point	**points;
 	char	*line;
 	char	**split;
 	int		y;
 
 	map = init_map();
-	line = ft_strdup("");;
+	line = ft_strdup("");
 	y = 1;
 	while (line)
 	{
@@ -33,13 +33,14 @@ t_map	*make_map(int fd)
 		if (map->max_x == 0)
 			map->max_x = count_arrays((void **) split);
 		else if (map->max_x != count_arrays((void **) split))
-			return(free_points(points, y), free(map), free(line), free(split), NULL);
+			return (free_points(points, y), free(map), free(line),
+				free(split), NULL);
 		free_points(points, map->max_x);
 		points = get_points(split, map->max_x, y);
 		print_points(points, map->max_x);
 		y++;
 	}
-	return (map);	
+	return (map);
 }
 
 int	count_arrays(void **array)
@@ -51,5 +52,5 @@ int	count_arrays(void **array)
 	{
 		i++;
 	}
-	return i;
+	return (i);
 }
