@@ -36,8 +36,25 @@ t_point	**get_points(char **split, int size, int y)
 		points[i]->x = i + 1;
 		points[i]->y = y;
 		points[i]->z = ft_atoi(point[0]);
-		points[i]->color = ft_atoi(point[1]);
+		points[i]->color = 255;
 		i++;
 	}
 	return (points);
+}
+
+void	print_points(t_point **points, int size)
+{
+	int	i;
+	t_point	*pt;
+
+	i = 0;
+	while (i < size)
+	{
+		pt = points[i];
+		ft_printf("==============================\n");
+		ft_printf("%d° Point:\n", i + 1);
+		ft_printf("X: %d\nY: %d\nZ: %d\nColor: %d\n",(int)pt->x, (int)pt->y, (int)pt->z, (int)pt->color);
+		ft_printf("==============================\n\n");
+		i++;
+	}
 }

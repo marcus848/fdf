@@ -3,7 +3,7 @@ NAME = fdf
 
 # Compile and Flags
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 NODIR = --no-print-directory
 INCLUDE = -Iinclude -lm -lXext -lX11
 
@@ -20,12 +20,12 @@ APP_DIR = app
 LIBFT = $(LIBFT_DIR)/libft.a
 MLX = $(MLX_DIR)/libmlx.a
 
-SRCS = $(SRC_DIR)/main.c \
-       $(SRC_DIR)/init_structs.c \
-       $(SRC_DIR)/init_utils.c \
-       $(SRC_DIR)/error.c \
-       $(SRC_DIR)/coordinates.c
+# Temp
+TEMP_MEN = .mensages
 
+# FILES
+FILES = main.c init_structs.c init_utils.c error.c coordinates.c
+SRCS = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Colors
@@ -41,33 +41,41 @@ WHITE   = \033[37m
 all: $(OBJ_DIR) $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(INCLUDE) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(INCLUDE) -o $(NAME)
 	@echo "$(GREEN)Done!$(RESET)"
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
+	@echo "$(CYAN)Building Objs...$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -Iinclude -I$(LIBFT_DIR) -I$(MLX_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -Iinclude -I$(LIBFT_DIR) -I$(MLX_DIR) -c $< -o $@
+
+rm_temp:
+	@rm $(TEMP_MEN)
 
 $(LIBFT):
-	@echo "Building libft..."
-	@make -C $(LIBFT_DIR) $(NODIR)
+	@echo "$(CYAN)Building libft...$(RESET)"
+	@make -C $(LIBFT_DIR) $(NODIR) > .mensages 2>&1 || TRUE
+	@rm -f $(TEMP_MEN)
 
 $(MLX):
-	@echo "Building MLX..."
-	@make -C $(MLX_DIR)
+	@echo "$(CYAN)Building MLX...$(RESET)"
+	@make -C $(MLX_DIR) > .mensages 2>&1 || TRUE
+	@rm -f $(TEMP_MEN)
 
 clean:
-	@echo "Cleaning up object files..."
+	@echo "$(RED)Cleaning up object files...$(RESET)"
 	@rm -rf $(OBJ_DIR)
-	@make clean -C $(LIBFT_DIR) 
-	@make clean -C $(MLX_DIR)
+	@make clean -C $(LIBFT_DIR) $(NODIR) > .mensages 2>&1 || TRUE
+	@make clean -C $(MLX_DIR) > .mensages 2>&1
+	@rm -f $(TEMP_MEN)
 
 fclean: clean
-	@echo "Removing binary..."
+	@echo "$(RED)Removing binary...$(RESET)"
 	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_DIR)
+	@make fclean -C $(LIBFT_DIR) $(NODIR) > .mensages 2>&1 || TRUE
+	@rm -f $(TEMP_MEN)
 
 re: fclean all
 

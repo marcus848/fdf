@@ -26,3 +26,14 @@ void	error(int erro)
 		ft_printf("Message 5");
 	exit (1);
 }
+
+void	free_points(t_point **points, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+		free(points[i++]);
+	free(points);
+	*points = NULL;
+}

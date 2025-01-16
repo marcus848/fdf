@@ -54,12 +54,14 @@ t_map	*init_map(void);
 
 // coordinates
 t_map	*make_map(int fd);
-int	count_x(char **split);
+int	count_arrays(void **array);
 
 // error
 void	error(int erro);
+void	free_points(t_point **points, int size);
 
 // init_utils
 t_point	**get_points(char **split, int size, int y);
+void	print_points(t_point **points, int size);
 
 #endif
