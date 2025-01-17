@@ -58,6 +58,7 @@ SRCS = \
 	$(MEMORY_DIR)/ft_memcpy.c \
 	$(MEMORY_DIR)/ft_memmove.c \
 	$(MEMORY_DIR)/ft_memset.c \
+	$(MEMORY_DIR)/ft_realloc.c \
 	$(STRING_DIR)/ft_atoi.c \
 	$(STRING_DIR)/ft_itoa.c \
 	$(STRING_DIR)/ft_split.c \

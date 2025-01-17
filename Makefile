@@ -24,7 +24,7 @@ MLX = $(MLX_DIR)/libmlx.a
 TEMP_MEN = .mensages
 
 # FILES
-FILES = main.c init_structs.c init_utils.c error.c coordinates.c free.c
+FILES = main.c init_structs.c coordinates_utils.c error.c coordinates.c free.c
 SRCS = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -64,6 +64,12 @@ $(MLX):
 	@make -C $(MLX_DIR) > .mensages 2>&1 || TRUE
 	@rm -f $(TEMP_MEN)
 
+valgrind: $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(TEST)
+
+vgdb: $(NAME)
+	valgrind --vgdb=yes --vgdb-error=0 --leak-check=full --show-leak-kinds=all ./$(NAME) $(TEST)
+	
 clean:
 	@echo "$(RED)Cleaning up object files...$(RESET)"
 	@rm -rf $(OBJ_DIR)

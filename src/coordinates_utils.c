@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
-#include <stdlib.h>
 
 t_point	**get_points(char **split, int size, int y)
 {
@@ -34,6 +33,33 @@ t_point	**get_points(char **split, int size, int y)
 		i++;
 	}
 	return (points);
+}
+
+int	isometric(t_point **points, t_map *map, int size)
+{
+	t_point	*pt;
+	double	angle_rad;
+	size_t	c_size;
+	int	i;
+
+	angle_rad = 30 * (M_PI/180);
+	c_size = (map->max_y - 1) * map->max_x;
+	map->coordinates = (int **) ft_realloc(map->coordinates,
+					sizeof(int*) * c_size, sizeof(int *) * (c_size + size));
+	if (!map->coordinates)
+		return (0);
+	i = 0;
+	while (i < size)
+	{
+		pt = points[i];
+		map->coordinates[c_size + i] = (int *) malloc(sizeof(int) * 2);
+		if (!map->coordinates[i])
+			return (0);
+		map->coordinates[c_size + i][0] = (pt[i].x - pt[i].y) * cos(30);
+		map->coordinates[c_size + i][1] = (pt[i].x + pt[i].y) * sin(30) - pt[i].z;
+		i++;
+	}
+	return (1);
 }
 
 void	print_points(t_point **points, int columns)

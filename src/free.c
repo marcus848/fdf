@@ -47,3 +47,10 @@ void	free_points(t_point **points, int size)
 		free(points);
 	}
 }
+
+// free static line in GNL;
+void	free_line_gnl(int fd)
+{
+	while (get_next_line(fd))
+		;
+}

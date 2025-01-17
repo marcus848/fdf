@@ -61,13 +61,15 @@ int	process_line(t_map *map, char *line, int y);
 void	error(int erro);
 void	free_points(t_point **points, int size);
 
-// init_utils
+// coordinates_utils
 t_point	**get_points(char **split, int size, int y);
 void	print_points(t_point **points, int columns);
+int	isometric(t_point **points, t_map *map, int size);
 
 // free
 void	free_tokens(char **tokens);
 void	free_map(t_map *map);
+void	free_line_gnl(int fd);
 
 
 #endif
