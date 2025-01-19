@@ -3,7 +3,7 @@ NAME = libft.a
 
 # flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude
+CFLAGS = -Wall -Wextra -Werror -Iinclude -g
 
 # Dirs
 SRC_DIR = src

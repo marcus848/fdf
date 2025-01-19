@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:10:56 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/16 16:52:14 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/18 19:32:47 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_fdf	*init_fdf(char *file_name)
 		free(fdf);
 		error(1);
 	}
-	free(fdf->map);
+	print_points(fdf->map->coordinates, fdf->map->max_x * fdf->map->max_y);
+	free_map(fdf->map);
 	return (fdf);
 }
 

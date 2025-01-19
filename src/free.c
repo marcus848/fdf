@@ -14,8 +14,18 @@
 
 void	free_map(t_map *map)
 {
+	int	i;
+
+	i = 0;
 	if (map->coordinates)
+	{
+		while (i < map->max_x * map->max_y)
+		{
+			free(map->coordinates[i]);
+			i++;
+		}
 		free(map->coordinates);
+	}
 	free(map);
 }
 
@@ -30,22 +40,6 @@ void	free_tokens(char **tokens)
 		i++;
 	}
 	free(tokens);
-}
-
-void	free_points(t_point **points, int size)
-{
-	int	i;
-
-	i = 0;
-	if (points)
-	{
-		while (i < size)
-		{
-			free(points[i]);
-			i++;
-		}
-		free(points);
-	}
 }
 
 // free static line in GNL;

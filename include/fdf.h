@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 18:08:47 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/16 16:51:26 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/18 19:30:46 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 // defines
 #define WIN_WIDTH 1200
 #define WIN_HEIGHT 900
-
+# define ANG_30 0.52359877
+# define SCALE 30
 // Libs
 #include "../mlx/mlx.h"
 #include "../libft/include/libft.h"
@@ -34,9 +35,11 @@ typedef struct s_point
 
 typedef struct s_map
 {
-	int	**coordinates;
+	t_point	**coordinates;
 	int	max_x;
 	int	max_y;
+	int	max_z;
+	int	min_z;
 }	t_map;
 
 typedef struct s_fdf
@@ -55,21 +58,21 @@ t_map	*init_map(void);
 // coordinates
 t_map	*make_map(int fd);
 int	count_arrays(void **array);
-int	process_line(t_map *map, char *line, int y);
+int	process_line(t_map *map, char *line);
 
 // error
 void	error(int erro);
-void	free_points(t_point **points, int size);
 
 // coordinates_utils
-t_point	**get_points(char **split, int size, int y);
+t_point	**get_points(char **split, t_map *map);
 void	print_points(t_point **points, int columns);
 int	isometric(t_point **points, t_map *map, int size);
+void	print_isometric(t_map *map);
 
 // free
 void	free_tokens(char **tokens);
 void	free_map(t_map *map);
 void	free_line_gnl(int fd);
 
-
+// draw
 #endif
