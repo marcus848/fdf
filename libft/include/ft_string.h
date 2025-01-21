@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 20:08:46 by marcudos          #+#    #+#             */
-/*   Updated: 2024/12/17 20:23:23 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:53:42 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 int		ft_strlen(const char *s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_atoi(const char *nptr);
+int		ft_atoi_base(char *str, int base);
+int		ft_count_words(const char *str);
 
 #endif // !FT_STRING_H

@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_count_words.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 17:35:02 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/21 17:55:34 by marcudos         ###   ########.fr       */
+/*   Created: 2025/01/21 13:14:08 by marcudos          #+#    #+#             */
+/*   Updated: 2025/01/21 13:18:47 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/fdf.h"
+#include "../../include/libft.h"
 
-int	main(int ac, char **av)
+int	ft_count_words(const char *str)
 {
-	char	*file_name;
-	t_fdf	*fdf;
+	int	count;
+	int	in_word;
 
-	if (ac != 2)
-		exit(1);
-	file_name = av[1];
-	fdf = init_fdf(file_name);
-	render(fdf);
-	mlx_loop(fdf->mlx);
-	free(fdf);
-	return (1);
+	count = 0;
+	in_word = 0;
+	while (*str)
+	{
+		if (*str == ' ' || *str == '\t' || *str == '\n')
+			in_word = 0;
+		else if (!in_word)
+		{
+			in_word = 1;
+			count++;
+		}
+		str++;
+	}
+	return (count);
 }

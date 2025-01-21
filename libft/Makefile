@@ -3,7 +3,7 @@ NAME = libft.a
 
 # flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iinclude -g
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 
 # Dirs
 SRC_DIR = src
@@ -60,6 +60,7 @@ SRCS = \
 	$(MEMORY_DIR)/ft_memset.c \
 	$(MEMORY_DIR)/ft_realloc.c \
 	$(STRING_DIR)/ft_atoi.c \
+	$(STRING_DIR)/ft_atoi_base.c \
 	$(STRING_DIR)/ft_itoa.c \
 	$(STRING_DIR)/ft_split.c \
 	$(STRING_DIR)/ft_strchr.c \
@@ -75,6 +76,7 @@ SRCS = \
 	$(STRING_DIR)/ft_strrchr.c \
 	$(STRING_DIR)/ft_strtrim.c \
 	$(STRING_DIR)/ft_substr.c \
+	$(STRING_DIR)/ft_count_words.c \
 	$(PRINTF_DIR)/ft_printf.c \
 	$(PRINTF_DIR)/parse_format.c \
 	$(PRINTF_DIR)/parse_utils.c \
