@@ -6,142 +6,52 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 15:16:28 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/21 20:19:28 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/22 20:44:36 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/fdf.h"
 
-void bresenham1(t_point p1, t_point p2, void *mlx, void *win);
-void	ft_drawline(t_point point1, t_point point2, void *mlx, void *win);
-typedef struct s_delta
+void	render(t_fdf *fdf)
 {
-	double	deltax;
-	double	deltay;
-	double	deltacolor;
-	double	x;
-	double	y;
-	double	c;
-	int		pixels;
-}	t_delta;
-void scale_coordinates(t_fdf *fdf)
-{
-    int x, y;
+	int	x;
+	int	y;
 
-    for (y = 0; y < fdf->map->max_y; y++)
-    {
-        for (x = 0; x < fdf->map->max_x; x++)
-        {
-            // Multiplicando as coordenadas por 100
-            fdf->map->coordinates[x][y].x *= scale(fdf->map);
-            fdf->map->coordinates[x][y].y *= scale(fdf->map);
-            fdf->map->coordinates[x][y].z *= scale(fdf->map);
-        }
-    }
+	y = 0;
+	while (y < fdf->map->max_y)
+	{
+		x = 0;
+		while (x < fdf->map->max_x)
+		{
+			if (x < fdf->map->max_x - 1)
+			{
+				render_line(fdf, fdf->map->coordinates[x][y],
+					fdf->map->coordinates[x + 1][y]);
+			}
+			if (y < fdf->map->max_y - 1)
+			{
+				render_line(fdf, fdf->map->coordinates[x][y],
+					fdf->map->coordinates[x][y + 1]);
+			}
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img->img, 0, 0);
 }
-
-
-void offset(t_fdf *fdf)
-{
-    int x, y;
-
-    for (y = 0; y < fdf->map->max_y; y++)
-    {
-        for (x = 0; x < fdf->map->max_x; x++)
-        {
-            // Multiplicando as coordenadas por 100
-            fdf->map->coordinates[x][y].x += WIN_WIDTH / 1.75;
-            fdf->map->coordinates[x][y].y += WIN_HEIGHT / 2;
-        }
-    }
-}
-
-void render(t_fdf *fdf)
-{
-    int x, y;
-	
-	scale_coordinates(fdf);
-	isometric(fdf);
-	offset(fdf);
-    y = 0;
-    while (y < fdf->map->max_y)
-    {
-        x = 0;
-        while (x < fdf->map->max_x)
-        {
-            // Linha horizontal (x -> x+1)
-            if (x < fdf->map->max_x - 1)
-            {
-                // bresenham1(fdf->map->coordinates[x][y], fdf->map->coordinates[x + 1][y], fdf->mlx, fdf->win);
-                ft_drawline(fdf->map->coordinates[x][y], fdf->map->coordinates[x + 1][y], fdf->mlx, fdf->win);
-            }
-
-            // Linha vertical (y -> y+1)
-            if (y < fdf->map->max_y - 1)
-            {
-                ft_drawline(fdf->map->coordinates[x][y], fdf->map->coordinates[x][y + 1], fdf->mlx, fdf->win);
-            }
-
-            x++;
-        }
-        y++;
-    }
-}
-
-
-void bresenham1(t_point p1, t_point p2, void *mlx, void *win)
-{
-    int x, y;
-    int dx, dy;
-    int d, sx, sy;
-	int color = p1.color;
-    x = (int)p1.x;
-    y = (int)p1.y;
-    dx = abs((int)p2.x - (int)p1.x);
-    dy = abs((int)p2.y - (int)p1.y);
-    sx = (p2.x > p1.x) ? 1 : -1; // Direção do incremento de x
-    sy = (p2.y > p1.y) ? 1 : -1;
-    d = 2 * dy - dx;
-    mlx_pixel_put(mlx, win, x, y, color);
-
-    if (dx > dy)
-    {
-        while (x != (int)p2.x)
-        {
-            mlx_pixel_put(mlx, win, x, y, color);
-            if (d >= 0)
-            {
-                y += sy;
-                d -= 2 * dx;
-            }
-            d += 2 * dy;
-            x += sx;
-        }
-    }
-    else
-    {
-        while (y != (int)p2.y)
-        {
-            mlx_pixel_put(mlx, win, x, y, color);
-            if (d >= 0)
-            {
-                x += sx;
-                d -= 2 * dy;
-            }
-            d += 2 * dx;
-            y += sy;
-        }
-    }
-    mlx_pixel_put(mlx, win, x, y, color);
-}
-
 
 void	render_line(t_fdf *fdf, t_point start, t_point end)
 {
-	fdf->line = init_line(start, end);
-	bresenham(fdf, fdf->line);
+	start.z *= fdf->cam->scale_z;
+	end.z *= fdf->cam->scale_z;
+	fdf->img->line = init_line(start, end, fdf);
+	isometric(fdf->img->line);
+	scale(fdf->img->line, fdf->cam->scale_factor);
+	offset(fdf->img->line, fdf->cam);
+	ft_drawline(fdf->img->line->start, fdf->img->line->end, fdf);
+	free(fdf->img->line);
 }
+
 int	getpixels(t_point point1, t_point point2)
 {
 	double	deltax;
@@ -153,7 +63,8 @@ int	getpixels(t_point point1, t_point point2)
 	pixels = sqrt((deltax * deltax) + (deltay * deltay));
 	return (pixels);
 }
-void	ft_drawline(t_point point1, t_point point2, void *mlx, void *win)
+
+void	ft_drawline(t_point point1, t_point point2, t_fdf *fdf)
 {
 	t_delta	d;
 
@@ -169,10 +80,19 @@ void	ft_drawline(t_point point1, t_point point2, void *mlx, void *win)
 	d.deltacolor /= d.pixels;
 	while (d.pixels)
 	{
-		mlx_pixel_put(mlx, win, d.x, d.y, d.c);
+		if (d.x >= 0 && d.x < WIN_WIDTH && d.y >= 0 && d.y < WIN_HEIGHT)
+			my_mlx_pixel_put(fdf->img, d.x, d.y, d.c);
 		d.x += d.deltax;
 		d.y += d.deltay;
 		d.c += d.deltacolor;
 		d.pixels--;
 	}
+}
+
+void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->size_line + x * (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }

@@ -6,37 +6,24 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 17:18:49 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/21 19:33:58 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:58:18 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void isometric(t_fdf *fdf)
+void	scale(t_line *line, int scale_factor)
 {
-    int x, y;
-    t_point *line;
-
-    y = 0;
-    while (y < fdf->map->max_y)
-    {
-        x = 0;
-        while (x < fdf->map->max_x)
-        {
-            // Pegando o ponto original da matriz
-            line = &fdf->map->coordinates[x][y];
-
-            // Calculando a nova coordenada x e y para a projeção isométrica
-            float new_x = (line->x - line->y) * cos(ANG_30);
-            float new_y = (line->x + line->y) * cos(ANG_30) - line->z;
-
-            // Atualizando as coordenadas diretamente no ponto
-            line->x = new_x;
-            line->y = new_y;
-
-            x++;
-        }
-        y++;
-    }
+	line->start.x *= scale_factor;
+	line->start.y *= scale_factor;
+	line->end.x *= scale_factor;
+	line->end.y *= scale_factor;
 }
 
+void	offset(t_line *line, t_cam *cam)
+{
+	line->start.x += cam->offset_x;
+	line->start.y += cam->offset_y;
+	line->end.x += cam->offset_x;
+	line->end.y += cam->offset_y;
+}

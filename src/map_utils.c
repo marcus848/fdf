@@ -6,48 +6,47 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 18:05:27 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/21 20:25:28 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/22 20:13:57 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
-#include <fcntl.h>
 
 void	get_points(char *file_name, t_map *map)
 {
 	char	*line;
 	char	**split;
 	int		fd;
-	int		x;
-	int		y;
+	int		coord[2];
 
 	fd = open(file_name, O_RDONLY);
-	y = 0;
-	while (y < map->max_y)
+	coord[0] = 0;
+	while (coord[0] < map->max_y)
 	{
 		line = get_next_line(fd);
 		split = ft_split(line, ' ');
-		x = 0;
-		while (x < map->max_x)
+		coord[1] = 0;
+		while (coord[1] < map->max_x)
 		{
-			fill_point(split[x], &map->coordinates[x][y], map, x, y);
-			free(split[x]);
-			x++;
+			fill_point(split[coord[1]], &map->coordinates[coord[1]][coord[0]],
+				map, coord);
+			free(split[coord[1]]);
+			coord[1]++;
 		}
 		free(split);
 		free(line);
-		y++;
+		coord[0]++;
 	}
 	close(fd);
 }
 
-void	fill_point(char *point, t_point *coordinate, t_map *map, int x, int y)
+void	fill_point(char *point, t_point *coordinate, t_map *map, int coord[2])
 {
 	char	**info;
-	int	i;
+	int		i;
 
-	coordinate->x = (float) x;
-	coordinate->y = (float) y;
+	coordinate->x = (float) coord[1];
+	coordinate->y = (float) coord[0];
 	coordinate->color = -1;
 	if (ft_strchr(point, ','))
 	{
@@ -78,7 +77,7 @@ void	center_to_origin(t_map *map)
 		x = 0;
 		while (x < map->max_x)
 		{
-			map->coordinates[x][y].x -= (float) map->max_x / 2;
+			map->coordinates[x][y].x -= (float)map->max_x / 2;
 			map->coordinates[x][y].y -= (float)map->max_y / 2;
 			x++;
 		}
@@ -86,7 +85,7 @@ void	center_to_origin(t_map *map)
 	}
 }
 
-int	scale(t_map *map)
+int	scale_points(t_map *map)
 {
 	float	scale_x;
 	float	scale_y;
@@ -98,22 +97,4 @@ int	scale(t_map *map)
 	if (scale_factor < 4)
 		return (2);
 	return (scale_factor / 2);
-}
-
-void	print_points(t_point **points, int columns)
-{
-	t_point	*pt;
-	int		i;
-
-	i = 0;
-	while (i < columns)
-	{
-		pt = points[i];
-		ft_printf("=============== XYZ =============\n");
-		ft_printf("%d° Point:\n", i + 1);
-		ft_printf("X: %d\nY: %d\nZ: %d\nColor: %d\n",
-			(int) pt->x, (int) pt->y, (int) pt->z, (int) pt->color);
-		ft_printf("=================================\n\n");
-		i++;
-	}
 }

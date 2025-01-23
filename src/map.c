@@ -6,35 +6,31 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:02:09 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/21 15:30:01 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/22 20:17:19 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 #include <fcntl.h>
 
-t_map	*make_map(char *file_name)
+t_map	*make_map(char *file_name, t_fdf *fdf)
 {
 	t_map	*map;
 	int		fd;
-	
+
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
-		error(3);
+		error(1, fdf);
 	close(fd);
 	map = init_map();
 	if (!map)
-		return (NULL);
-	get_dimensions(file_name, map);
+		error(2, fdf);
+	if (!get_dimensions(file_name, map, fdf))
+		error(4, fdf);
 	map->coordinates = init_coordinates(map->max_y, map->max_x);
 	if (!map->coordinates)
-	{
-		free(map);
-		return (NULL);
-	}
+		error(5, fdf);
 	get_points(file_name, map);
 	center_to_origin(map);
 	return (map);
 }
-
-

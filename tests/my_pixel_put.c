@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 19:18:38 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/08 19:47:38 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:59:03 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_data {
 	int	endian;
 } 		t_data;
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	my_mlx_pixel_put2(t_data *data, int x, int y, int color);
 
 int	main(void)
 {
@@ -38,7 +38,7 @@ int	main(void)
 	while (i++ <= height )
 	{
 		while ( j++ <= width / 4)
-			my_mlx_pixel_put(&img, j, i, red);
+			my_mlx_pixel_put2(&img, j, i, red);
 		j = -1;
 	}
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
@@ -52,7 +52,7 @@ int	main(void)
 	mlx_loop(mlx);
 }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put2(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 

@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 14:39:47 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/16 16:51:19 by marcudos         ###   ########.fr       */
+/*   Created: 2025/01/22 19:32:34 by marcudos          #+#    #+#             */
+/*   Updated: 2025/01/22 20:35:10 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
+#include <bits/types/cookie_io_functions_t.h>
 
-void	free_map(t_map *map)
+void	free_coordinates(t_point **coordinates, int x)
 {
-	int	i;
-
-	i = 0;
-	if (map->coordinates)
-	{
-		while (i < map->max_x * map->max_y)
-		{
-			free(map->coordinates[i]);
-			i++;
-		}
-		free(map->coordinates);
-	}
-	free(map);
+	while (x--)
+		free(coordinates[x]);
 }
 
 void	free_tokens(char **tokens)
@@ -41,9 +31,3 @@ void	free_tokens(char **tokens)
 	}
 	free(tokens);
 }
-// free static line in GNL;
-// void	free_line_gnl(int fd)
-// {
-// 	while (get_next_line(fd))
-// 		;
-// }
