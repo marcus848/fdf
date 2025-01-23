@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 18:08:47 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/22 20:30:37 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/01/23 19:04:07 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 // defines
 # define WIN_WIDTH 1200
 # define WIN_HEIGHT 900
+# define MAX_PIXELS 1080000
 
 # define ANG_30 0.52359877
 # define SCALE 30
@@ -69,7 +70,6 @@ typedef struct s_delta
 {
 	double	deltax;
 	double	deltay;
-	double	deltacolor;
 	double	x;
 	double	y;
 	double	c;
@@ -95,8 +95,18 @@ typedef struct s_fdf
 	t_cam	*cam;
 }	t_fdf;
 
+typedef struct s_colors
+{
+	int	r1;
+	int	g1;
+	int	b1;
+	int	r2;
+	int	g2;
+	int	b2;
+}	t_colors;
 // main
 int	close_window(t_fdf *fdf);
+int	key_press(int keycode, t_fdf *fdf);
 
 // init_structs
 t_fdf	*init_fdf(char *file_name);
@@ -141,7 +151,7 @@ float	min(float a, float b);
 void	render(t_fdf *fdf);
 void	render_line(t_fdf *fdf, t_point start, t_point end);
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-void	ft_drawline(t_point point1, t_point point2, t_fdf *fdf);
+void	drawline(t_point point1, t_point point2, t_fdf *fdf);
 
 // transform
 void	isometric(t_line *line);
@@ -152,5 +162,17 @@ void	offset(t_line *line, t_cam *cam);
 float	min(float a, float b);
 float	absolute(float nbr);
 float	max(float a, float b);
+
+// color
+float	fraction(float start, float end, float current);
+float	calculate_fraction(int x, int y, t_point *start, t_point *end);
+int	interpolate_colors(int color1, int color2, float fraction);
+
+// draw
+void	clear_image(t_img *img, int image_size);
+
+// intercations
+void	translate(int keycode, t_fdf *fdf);
+void	scale_z(int keycode, t_fdf *fdf);
 
 #endif

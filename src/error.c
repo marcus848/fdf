@@ -17,7 +17,7 @@ void	error(int erro, t_fdf *fdf)
 	int	y;
 
 	if (erro == 3)
-		y = fdf->win_y + 1;
+		y = fdf->map->max_y + 1;
 	if (erro != 3)
 		free_all(fdf);
 	if (erro == 1)

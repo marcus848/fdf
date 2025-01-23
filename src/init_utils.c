@@ -58,6 +58,7 @@ int	get_dimensions(char *file_name, t_map *map, t_fdf *fdf)
 			map->max_x = ft_count_words(line);
 		else if (map->max_x != ft_count_words(line))
 		{
+			fdf->map = map;
 			close(fd);
 			free(line);
 			error(3, fdf);
