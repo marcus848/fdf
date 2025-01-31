@@ -37,6 +37,8 @@ void	get_points(char *file_name, t_map *map)
 		free(line);
 		coord[0]++;
 	}
+	while (get_next_line(fd))
+		;
 	close(fd);
 }
 
