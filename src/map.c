@@ -25,8 +25,7 @@ t_map	*make_map(char *file_name, t_fdf *fdf)
 	map = init_map();
 	if (!map)
 		error(2, fdf);
-	if (!get_dimensions(file_name, map, fdf))
-		error(4, fdf);
+	get_dimensions(file_name, map, fdf);
 	map->coordinates = init_coordinates(map->max_y, map->max_x);
 	if (!map->coordinates)
 		error(5, fdf);

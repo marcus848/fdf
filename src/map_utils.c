@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 18:05:27 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/22 20:13:57 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:45:43 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ void	get_points(char *file_name, t_map *map)
 			free(split[coord[1]]);
 			coord[1]++;
 		}
+		free(split[coord[1]]);
 		free(split);
 		free(line);
 		coord[0]++;
 	}
-	while (get_next_line(fd))
-		;
-	close(fd);
+	free_line_gnl(fd);
 }
 
 void	fill_point(char *point, t_point *coordinate, t_map *map, int coord[2])

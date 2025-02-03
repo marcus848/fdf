@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:10:56 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/22 20:17:19 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:54:21 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_fdf	*init_fdf(char *file_name)
 		return (NULL);
 	fdf->map = make_map(file_name, fdf);
 	fdf->mlx = mlx_init();
-	fdf->win_x = WIN_WIDTH;
+	fdf->win_x = WIN_WIDTH + 200;
 	fdf->win_y = WIN_HEIGHT;
 	fdf->win = mlx_new_window(fdf->mlx, fdf->win_x, fdf->win_y, "fdf");
 	fdf->img = init_img(fdf->mlx);
@@ -95,5 +95,9 @@ t_cam	*init_cam(t_fdf *fdf)
 	cam->offset_y = WIN_HEIGHT / 2;
 	cam->scale_z = 1;
 	cam->scale_factor = scale_points(fdf->map);
+	cam->alpha = 0;
+	cam->beta = 0;
+	cam->gamma = 0;
+	cam->type_project = ISOMETRIC;
 	return (cam);
 }

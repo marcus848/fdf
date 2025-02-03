@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 15:16:28 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/23 18:58:06 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:11:25 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	render(t_fdf *fdf)
 	int	y;
 
 	y = 0;
-	// clear_image(fdf->img, MAX_PIXELS * 4);
 	ft_memset(fdf->img->addr, BACKGROUND_DEFAULT, MAX_PIXELS * 4);
 	while (y < fdf->map->max_y)
 	{
@@ -39,7 +38,7 @@ void	render(t_fdf *fdf)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img->img, 0, 0);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img->img, 200, 0);
 }
 
 void	render_line(t_fdf *fdf, t_point start, t_point end)
@@ -47,10 +46,10 @@ void	render_line(t_fdf *fdf, t_point start, t_point end)
 	start.z *= fdf->cam->scale_z;
 	end.z *= fdf->cam->scale_z;
 	fdf->img->line = init_line(start, end, fdf);
-	isometric(fdf->img->line);
+	rotate(fdf->cam, fdf->img->line);
+	project(fdf->cam, fdf->img->line);
 	scale(fdf->img->line, fdf->cam->scale_factor);
 	offset(fdf->img->line, fdf->cam);
 	drawline(fdf->img->line->start, fdf->img->line->end, fdf);
 	free(fdf->img->line);
 }
-

@@ -1,44 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 17:09:09 by marcudos          #+#    #+#             */
-/*   Updated: 2025/02/03 19:46:47 by marcudos         ###   ########.fr       */
+/*   Created: 2025/02/03 16:40:58 by marcudos          #+#    #+#             */
+/*   Updated: 2025/02/03 19:37:42 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/fdf.h"
+#ifndef KEYS_H
+# define KEYS_H
 
-float	min(float a, float b)
-{
-	if (a < b)
-		return (a);
-	else
-		return (b);
-}
+# define KEY_ESC 65307
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_LEFT 65361
+# define KEY_RIGTH 65363
 
-float	absolute(float nbr)
-{
-	if (nbr < 0)
-		return (-nbr);
-	else
-		return (nbr);
-}
+# define KEY_PLUS 61 
+# define KEY_MINUS 45
 
-float	max(float a, float b)
-{
-	if (a > b)
-		return (a);
-	else
-		return (b);
-}
+# define KEY_Z 122
+# define KEY_X 120
+# define KEY_W 119
+# define KEY_S 115
+# define KEY_A 97
+# define KEY_D 100
+# define KEY_Q 113
+# define KEY_E 101
+# define KEY_I 105
+# define KEY_T 116
+# define KEY_P 112
 
-void	reset_angles(t_cam *cam)
-{
-	cam->gamma = 0;
-	cam->beta = 0;
-	cam->alpha = 0;
-}
+#endif

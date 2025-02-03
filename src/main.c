@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 17:35:02 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/23 19:05:43 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:32:58 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,28 @@ int	main(int ac, char **av)
 	fdf = init_fdf(file_name);
 	render(fdf);
 	mlx_hook(fdf->win, 17, 0, &close_window, fdf);
-	mlx_hook(fdf->win, 2, 1L<<0, &key_press, fdf);
+	mlx_hook(fdf->win, 2, 1L << 0, &key_press, fdf);
 	mlx_loop(fdf->mlx);
 	free(fdf);
 	return (1);
 }
 
-int key_press(int keycode, t_fdf *fdf)
+int	key_press(int keycode, t_fdf *fdf)
 {
-	if (keycode == 65307)
+	if (keycode == KEY_ESC)
 		close_window(fdf);
-	if (keycode == 65362)
+	if (keycode >= KEY_LEFT && keycode <= KEY_DOWN)
 		translate(keycode, fdf);
-	if (keycode == 65364)
-		translate(keycode, fdf);
-	if (keycode == 65361)
-		translate(keycode, fdf);
-	if (keycode == 65363)
-		translate(keycode, fdf);
-	if (keycode == 61 || keycode == 45)
+	if (keycode == KEY_Z || keycode == KEY_X)
 		scale_z(keycode, fdf);
+	if (keycode == KEY_MINUS || keycode == KEY_PLUS)
+		zoom(keycode, fdf);
+	if (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A ||
+		keycode == KEY_D || keycode == KEY_Q || keycode == KEY_E)
+		rotate_hook(keycode, fdf);
+	if (keycode == KEY_T || keycode == KEY_I || keycode == KEY_P)
+		change_projection(keycode, fdf);
+	render(fdf);
 	return (0);
 }
 

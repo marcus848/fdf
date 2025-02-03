@@ -25,7 +25,7 @@ TEMP_MEN = .mensages
 
 # FILES
 FILES = main.c init_structs.c map_utils.c error.c map.c free_structs.c init_utils.c render.c transform.c draw.c \
-	utils.c projections.c frees.c color.c interactions.c
+	utils.c projections.c frees.c color.c hooks.c rotate.c
 SRCS = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 14:39:47 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/22 21:19:38 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:42:45 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,4 @@ void	free_map(t_map *map)
 		free(map->coordinates);
 	}
 	free(map);
-	// return (NULL);
 }

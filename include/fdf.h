@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 18:08:47 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/23 19:04:07 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:47:01 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../mlx/mlx.h"
 # include "../libft/include/libft.h"
 # include <math.h>
+# include "keys.h"
 # include "colors.h"
 
 // defines
@@ -25,11 +26,20 @@
 # define MAX_PIXELS 1080000
 
 # define ANG_30 0.52359877
+# define ANG_1	0.01745329
 # define SCALE 30
 
 # define BACKGROUND_DEFAULT C_BLACK
 # define LINE_DEFAULT C_WHITE
 # define C_TEXT C_WHITE
+
+// enum
+enum e_project
+{
+	ISOMETRIC,
+	SIDE_PARALLEL,
+	TOP,
+};
 
 // Structs
 typedef struct s_point
@@ -82,6 +92,10 @@ typedef struct s_cam
 	float	scale_z;
 	float	offset_y;
 	float	offset_x;
+	double	alpha;
+	double	beta;
+	double	gamma;
+	int		type_project;
 }	t_cam;
 
 typedef struct s_fdf
@@ -105,8 +119,8 @@ typedef struct s_colors
 	int	b2;
 }	t_colors;
 // main
-int	close_window(t_fdf *fdf);
-int	key_press(int keycode, t_fdf *fdf);
+int		close_window(t_fdf *fdf);
+int		key_press(int keycode, t_fdf *fdf);
 
 // init_structs
 t_fdf	*init_fdf(char *file_name);
@@ -116,7 +130,7 @@ t_line	*init_line(t_point start, t_point end, t_fdf *fdf);
 t_cam	*init_cam(t_fdf *fdf);
 
 // init_utils
-int	get_dimensions(char *file_name, t_map *map, t_fdf *fdf);
+void	get_dimensions(char *file_name, t_map *map, t_fdf *fdf);
 t_point	**init_coordinates(int height, int width);
 t_fdf	*start_fdf(void);
 
@@ -135,17 +149,14 @@ void	error(int erro, t_fdf *fdf);
 // frees
 void	free_coordinates(t_point **coordinates, int x);
 void	free_tokens(char **tokens);
+void	free_line_gnl(int fd);
+void	free_line_gnl_with_line_char(int fd, char *line);
 
 // free_structs
 void	free_all(t_fdf *fdf);
 void	free_map(t_map *map);
 t_cam	*free_cam(t_cam *cam);
 t_img	*free_img(t_img *img, void *mlx_ptr, void *img_ptr);
-
-// utils
-float	max(float a, float b);
-float	absolute(float nbr);
-float	min(float a, float b);
 
 // render
 void	render(t_fdf *fdf);
@@ -154,19 +165,24 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 void	drawline(t_point point1, t_point point2, t_fdf *fdf);
 
 // transform
-void	isometric(t_line *line);
 void	scale(t_line *line, int scale_factor);
 void	offset(t_line *line, t_cam *cam);
+
+// projections
+void	project(t_cam *cam, t_line *line);
+void	isometric(t_line *line);
+void	side_parallel(t_line *line);
 
 // utils
 float	min(float a, float b);
 float	absolute(float nbr);
 float	max(float a, float b);
+void	reset_angles(t_cam *cam);
 
 // color
 float	fraction(float start, float end, float current);
 float	calculate_fraction(int x, int y, t_point *start, t_point *end);
-int	interpolate_colors(int color1, int color2, float fraction);
+int		interpolate_colors(int color1, int color2, float fraction);
 
 // draw
 void	clear_image(t_img *img, int image_size);
@@ -174,5 +190,14 @@ void	clear_image(t_img *img, int image_size);
 // intercations
 void	translate(int keycode, t_fdf *fdf);
 void	scale_z(int keycode, t_fdf *fdf);
+void	zoom(int keycode, t_fdf *fdf);
+void	rotate_hook(int keycode, t_fdf *fdf);
+void	change_projection(int keycode, t_fdf *fdf);
+
+// rotate
+void	rotate(t_cam *cam, t_line *line);
+void	rotate_x(t_line *line, double angle);
+void	rotate_y(t_line *line, double angle);
+void	rotate_z(t_line *line, double angle);
 
 #endif

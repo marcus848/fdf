@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:06:53 by marcudos          #+#    #+#             */
-/*   Updated: 2025/01/22 21:11:30 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:43:14 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_point	**init_coordinates(int height, int width)
 	return (coordinates);
 }
 
-int	get_dimensions(char *file_name, t_map *map, t_fdf *fdf)
+void	get_dimensions(char *file_name, t_map *map, t_fdf *fdf)
 {
 	char	*line;
 	int		fd;
@@ -59,15 +59,14 @@ int	get_dimensions(char *file_name, t_map *map, t_fdf *fdf)
 		else if (map->max_x != ft_count_words(line))
 		{
 			fdf->map = map;
+			free_line_gnl_with_line_char(fd, line);
 			close(fd);
-			free(line);
 			error(3, fdf);
 		}
 		free (line);
 		map->max_y++;
 	}
 	close(fd);
-	return (1);
 }
 
 t_fdf	*start_fdf(void)
