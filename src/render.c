@@ -18,7 +18,7 @@ void	render(t_fdf *fdf)
 	int	y;
 
 	y = 0;
-	ft_memset(fdf->img->addr, BACKGROUND_DEFAULT, MAX_PIXELS * 4);
+	ft_memset(fdf->img->addr, fdf->theme, MAX_PIXELS * 4);
 	while (y < fdf->map->max_y)
 	{
 		x = 0;

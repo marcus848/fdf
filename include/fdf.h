@@ -47,7 +47,10 @@ typedef struct s_hsl
 	float	h;
 	float	s;
 	float	l;
-} t_hsl;
+	float	n_max;
+	float	n_min;
+	float	d;
+}	t_hsl;
 
 typedef struct s_rgb
 {
@@ -112,6 +115,12 @@ typedef struct s_cam
 	int		type_project;
 }	t_cam;
 
+typedef struct s_menu
+{
+	int	its_open;
+	t_img	img;
+}	t_menu;
+
 typedef struct s_fdf
 {
 	void	*mlx;
@@ -121,6 +130,8 @@ typedef struct s_fdf
 	t_map	*map;
 	t_img	*img;
 	t_cam	*cam;
+	int		theme;
+	t_menu	*menu;
 }	t_fdf;
 
 typedef struct s_colors
@@ -197,6 +208,9 @@ void	reset_angles(t_cam *cam);
 float	fraction(float start, float end, float current);
 float	calculate_fraction(int x, int y, t_point *start, t_point *end);
 int		interpolate_colors(int color1, int color2, float fraction);
+int		change_color(t_point point);
+void	adjust_lightness(t_hsl *hsl);
+void	adjust_color(t_hsl *hsl);
 
 // draw
 void	clear_image(t_img *img, int image_size);
@@ -207,11 +221,19 @@ void	scale_z(int keycode, t_fdf *fdf);
 void	zoom(int keycode, t_fdf *fdf);
 void	rotate_hook(int keycode, t_fdf *fdf);
 void	change_projection(int keycode, t_fdf *fdf);
+void	change_theme(int keycode, t_fdf *fdf);
 
 // rotate
 void	rotate(t_cam *cam, t_line *line);
 void	rotate_x(t_line *line, double angle);
 void	rotate_y(t_line *line, double angle);
 void	rotate_z(t_line *line, double angle);
+
+// theme
+t_hsl	rgb2hsl(float r, float g, float b);
+void	normalize_rgb(float *r, float *g, float *b, t_hsl *result);
+float	hue2rgb(float p, float q, float t);
+t_rgb	hsl2rgb(float h, float s, float l);
+void	calculate_hs(t_hsl *result, float r, float g, float b);
 
 #endif

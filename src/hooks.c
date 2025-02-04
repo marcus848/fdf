@@ -69,3 +69,14 @@ void	change_projection(int keycode, t_fdf *fdf)
 		fdf->cam->type_project = SIDE_PARALLEL;
 	reset_angles(fdf->cam);
 }
+
+void	change_theme(int keycode, t_fdf *fdf)
+{
+	if (keycode == KEY_L)
+	{
+		if (fdf->theme == BACKGROUND_DEFAULT)
+			fdf->theme = LINE_DEFAULT;
+		else
+			fdf->theme = BACKGROUND_DEFAULT;
+	}
+}

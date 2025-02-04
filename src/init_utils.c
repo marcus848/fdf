@@ -83,5 +83,6 @@ t_fdf	*start_fdf(void)
 	fdf->win = NULL;
 	fdf->win_x = 0;
 	fdf->win_y = 0;
+	fdf->theme = BACKGROUND_DEFAULT;
 	return (fdf);
 }

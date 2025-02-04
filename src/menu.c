@@ -12,7 +12,7 @@
 
 #include "../include/fdf.h"
 
-void	menu(t_fdf *fdf)
+void	make_menu(t_fdf *fdf)
 {
 	return ;
 }

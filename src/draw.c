@@ -36,6 +36,19 @@ void	drawline(t_point point1, t_point point2, t_fdf *fdf)
 	d.y = point1.y;
 	while (d.pixels)
 	{
+		if (fdf->theme == LINE_DEFAULT)
+		{
+			// if (point1.color == LINE_DEFAULT)
+			// 	point1.color = BACKGROUND_DEFAULT;
+			// else
+			// 	point1.color = change_color(point1);
+			// if (point2.color == LINE_DEFAULT)
+			// 	point2.color = BACKGROUND_DEFAULT;
+			// else
+			// 	point2.color = change_color(point2);
+			point1.color = change_color(point1);
+			point2.color = change_color(point2);
+		}
 		fraction = calculate_fraction(d.x, d.y, &point1, &point2);
 		d.c = interpolate_colors(point1.color, point2.color, fraction);
 		if (d.x >= 0 && d.x < WIN_WIDTH && d.y >= 0 && d.y < WIN_HEIGHT)

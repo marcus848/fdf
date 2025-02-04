@@ -33,5 +33,6 @@
 # define KEY_I 105
 # define KEY_T 116
 # define KEY_P 112
+# define KEY_L 108
 
 #endif

@@ -44,6 +44,8 @@ int	key_press(int keycode, t_fdf *fdf)
 		rotate_hook(keycode, fdf);
 	if (keycode == KEY_T || keycode == KEY_I || keycode == KEY_P)
 		change_projection(keycode, fdf);
+	if (keycode == KEY_L)
+		change_theme(keycode, fdf);
 	render(fdf);
 	return (0);
 }
