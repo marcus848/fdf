@@ -6,7 +6,7 @@
 /*   By: marcudos <marcudos@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 18:08:47 by marcudos          #+#    #+#             */
-/*   Updated: 2025/02/03 19:47:01 by marcudos         ###   ########.fr       */
+/*   Updated: 2025/02/03 21:03:33 by marcudos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,20 @@ enum e_project
 };
 
 // Structs
+typedef struct s_hsl
+{
+	float	h;
+	float	s;
+	float	l;
+} t_hsl;
+
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+}	t_rgb;
+
 typedef struct s_point
 {
 	float	x;
