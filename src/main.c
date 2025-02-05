@@ -41,12 +41,6 @@ int	mouse_press(int button, int x, int y, t_fdf *fdf)
 			if (y >= 750 && y <= 800)
 			{
 				change_theme(KEY_L, fdf);
-				if (fdf->menu && fdf->menu->sidebar_img)
-					mlx_destroy_image(fdf->mlx, fdf->menu->sidebar_img);
-				if (fdf->theme == LINE_DEFAULT)
-					fdf->menu->name = "./menu/ligth.xpm";
-				else
-					fdf->menu->name = "./menu/dark.xpm";
 				render(fdf);
 				make_menu(fdf);
 			}
@@ -71,7 +65,10 @@ int	key_press(int keycode, t_fdf *fdf)
 	if (keycode == KEY_T || keycode == KEY_I || keycode == KEY_P)
 		change_projection(keycode, fdf);
 	if (keycode == KEY_L)
+	{
 		change_theme(keycode, fdf);
+		make_menu(fdf);
+	}
 	render(fdf);
 	return (0);
 }
@@ -79,5 +76,6 @@ int	key_press(int keycode, t_fdf *fdf)
 int	close_window(t_fdf *fdf)
 {
 	free_all(fdf);
+	exit (0);
 	return (0);
 }

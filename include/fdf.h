@@ -18,7 +18,6 @@
 # include "../libft/include/libft.h"
 # include <math.h>
 # include "keys.h"
-# include "colors.h"
 
 // defines
 # define WIN_WIDTH 1200
@@ -27,11 +26,9 @@
 
 # define ANG_30 0.52359877
 # define ANG_1	0.01745329
-# define SCALE 30
 
-# define BACKGROUND_DEFAULT C_BLACK
-# define LINE_DEFAULT C_WHITE
-# define C_TEXT C_WHITE
+# define BACKGROUND_DEFAULT 0x000000
+# define LINE_DEFAULT 0xffffff
 
 // enum
 enum e_project
@@ -144,6 +141,7 @@ typedef struct s_colors
 	int	g2;
 	int	b2;
 }	t_colors;
+
 // main
 int		close_window(t_fdf *fdf);
 int		key_press(int keycode, t_fdf *fdf);
@@ -164,15 +162,13 @@ t_menu	*init_menu(void);
 
 // map
 t_map	*make_map(char *file_name, t_fdf *fdf);
-
-// map_utils
 void	get_points(char *file_name, t_map *map);
 void	fill_point(char *point, t_point *coordinate, t_map *map, int coord[2]);
 void	center_to_origin(t_map *map);
 int		scale_points(t_map *map);
 
 // error
-void	error(int erro, t_fdf *fdf);
+void	error(int err, t_fdf *fdf);
 
 // frees
 void	free_coordinates(t_point **coordinates, int x);
@@ -188,8 +184,13 @@ void	free_menu(t_fdf *fdf);
 // render
 void	render(t_fdf *fdf);
 void	render_line(t_fdf *fdf, t_point start, t_point end);
+
+// draw
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
 void	drawline(t_point point1, t_point point2, t_fdf *fdf);
+void	adjust_lightness(t_hsl *hsl);
+void	adjust_color(t_hsl *hsl);
+int		getpixels(t_point point1, t_point point2);
 
 // transform
 void	scale(t_line *line, int scale_factor);
@@ -211,16 +212,13 @@ float	fraction(float start, float end, float current);
 float	calculate_fraction(int x, int y, t_point *start, t_point *end);
 int		interpolate_colors(int color1, int color2, float fraction);
 int		change_color(t_point point);
-void	adjust_lightness(t_hsl *hsl);
-void	adjust_color(t_hsl *hsl);
 
-// draw
-void	clear_image(t_img *img, int image_size);
-
-// intercations
+// hooks
 void	translate(int keycode, t_fdf *fdf);
 void	scale_z(int keycode, t_fdf *fdf);
 void	zoom(int keycode, t_fdf *fdf);
+
+// hooks 2
 void	rotate_hook(int keycode, t_fdf *fdf);
 void	change_projection(int keycode, t_fdf *fdf);
 void	change_theme(int keycode, t_fdf *fdf);
@@ -232,13 +230,14 @@ void	rotate_y(t_line *line, double angle);
 void	rotate_z(t_line *line, double angle);
 
 // theme
-t_hsl	rgb2hsl(float r, float g, float b);
-void	normalize_rgb(float *r, float *g, float *b, t_hsl *result);
-float	hue2rgb(float p, float q, float t);
-t_rgb	hsl2rgb(float h, float s, float l);
 void	calculate_hs(t_hsl *result, float r, float g, float b);
+void	normalize_rgb(float *r, float *g, float *b, t_hsl *result);
+t_hsl	rgb2hsl(float r, float g, float b);
+t_rgb	hsl2rgb(float h, float s, float l);
+float	hue2rgb(float p, float q, float t);
 
 // menu
 void	make_menu(t_fdf *fdf);
+void	change_menu(t_fdf *fdf);
 
 #endif

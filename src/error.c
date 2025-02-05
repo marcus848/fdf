@@ -12,31 +12,31 @@
 
 #include "../include/fdf.h"
 
-void	error(int erro, t_fdf *fdf)
+void	error(int err, t_fdf *fdf)
 {
 	int	y;
 
-	if (erro == 3)
+	if (err == 3)
 	{
 		y = fdf->map->max_y + 1;
 		free(fdf->map);
 		free(fdf);
 	}
-	if (erro != 3)
+	if (err != 3)
 		free_all(fdf);
-	if (erro == 1)
-		ft_printf("error ao ler o arquivo\n");
-	if (erro == 2)
-		ft_printf("Erro ao iniciar o map\n");
-	if (erro == 3)
-		ft_printf("Numero de colunas incorreto na coluna: %d\n", y);
-	if (erro == 4)
-		ft_printf("erro durante o make map\n");
-	if (erro == 5)
-		ft_printf("erro ao iniciar as coordenadas\n");
-	if (erro == 6)
-		ft_printf("erro ao iniciar a imagem\n");
-	if (erro == 7)
-		ft_printf("erro ao iniciar a camera\n");
-	exit (erro);
+	if (err == 1)
+		ft_printf("Error reading the file\n");
+	if (err == 2)
+		ft_printf("Error initializing the map\n");
+	if (err == 3)
+		ft_printf("Incorrect number of columns at column: %d\n", y);
+	if (err == 4)
+		ft_printf("Error during map creation\n");
+	if (err == 5)
+		ft_printf("Error initializing coordinates\n");
+	if (err == 6)
+		ft_printf("Error initializing the image\n");
+	if (err == 7)
+		ft_printf("Error initializing the camera\n");
+	exit (err);
 }

@@ -18,7 +18,7 @@ void	free_all(t_fdf *fdf)
 		free_menu(fdf);
 	if (fdf->map)
 		free_map(fdf->map);
-	if (fdf->img->img)
+	if (fdf->img && fdf->img->img)
 		mlx_destroy_image(fdf->mlx, fdf->img->img);
 	if (fdf->img)
 		free(fdf->img);
@@ -31,7 +31,6 @@ void	free_all(t_fdf *fdf)
 	if (fdf->mlx)
 		free(fdf->mlx);
 	free(fdf);
-	exit (0);
 }
 
 void	free_menu(t_fdf *fdf)
