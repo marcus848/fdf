@@ -212,6 +212,7 @@ float	fraction(float start, float end, float current);
 float	calculate_fraction(int x, int y, t_point *start, t_point *end);
 int		interpolate_colors(int color1, int color2, float fraction);
 int		change_color(t_point point);
+int		get_color(int z, int z_min, int z_max);
 
 // hooks
 void	translate(int keycode, t_fdf *fdf);

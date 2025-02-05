@@ -12,6 +12,21 @@
 
 #include "../include/fdf.h"
 
+int	get_color(int z, int z_min, int z_max)
+{
+	float	ratio;
+	t_rgb	rgb;
+
+	if (z_max == z_min)
+		ratio = 1.0;
+	else
+		ratio = (float) (z - z_min) / (z_max - z_min);
+	rgb.r = (int)(ratio * 255);
+	rgb.g = 0;
+	rgb.b = (int)((1 - ratio) * 255);
+	return ((rgb.r << 16) | (rgb.g << 8) | rgb.b);
+}
+
 float	fraction(float start, float end, float current)
 {
 	if (start != end)
