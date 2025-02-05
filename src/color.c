@@ -12,15 +12,20 @@
 
 #include "../include/fdf.h"
 
-int	get_color(int z, int z_min, int z_max)
+int	get_color(int z, t_fdf *fdf)
 {
 	float	ratio;
 	t_rgb	rgb;
+	int		z_max;
+	int		z_min;
 
+	z_max = fdf->map->max_z;
+	z_min = fdf->map->min_z;
 	if (z_max == z_min)
 		ratio = 1.0;
 	else
-		ratio = (float) (z - z_min) / (z_max - z_min);
+		ratio = (float)(z - z_min) / (z_max - z_min);
+	ratio = sqrt(ratio);
 	rgb.r = (int)(ratio * 255);
 	rgb.g = 0;
 	rgb.b = (int)((1 - ratio) * 255);

@@ -71,6 +71,7 @@ typedef struct s_map
 	int		max_y;
 	int		max_z;
 	int		min_z;
+	int		have_color;
 }	t_map;
 
 typedef struct s_line
@@ -212,7 +213,7 @@ float	fraction(float start, float end, float current);
 float	calculate_fraction(int x, int y, t_point *start, t_point *end);
 int		interpolate_colors(int color1, int color2, float fraction);
 int		change_color(t_point point);
-int		get_color(int z, int z_min, int z_max);
+int		get_color(int z, t_fdf *fdf);
 
 // hooks
 void	translate(int keycode, t_fdf *fdf);

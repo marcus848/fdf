@@ -72,6 +72,8 @@ void	fill_point(char *point, t_point *coordinate, t_map *map, int coord[2])
 	coordinate->color = -1;
 	if (ft_strchr(point, ','))
 	{
+		if (!map->have_color)
+			map->have_color = 1;
 		info = ft_split(point, ',');
 		coordinate->z = (float) ft_atoi(info[0]);
 		coordinate->color = (float) ft_atoi_base(info[1], 16);

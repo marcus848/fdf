@@ -46,8 +46,13 @@ void	render_line(t_fdf *fdf, t_point start, t_point end)
 	start.z *= fdf->cam->scale_z;
 	end.z *= fdf->cam->scale_z;
 	fdf->img->line = init_line(start, end, fdf);
-	fdf->img->line->start.color = get_color(fdf->img->line->start.z, fdf->map->min_z, fdf->map->max_z);
-	fdf->img->line->end.color = get_color(fdf->img->line->end.z, fdf->map->min_z, fdf->map->max_z);
+	if (!fdf->map->have_color)
+	{
+		fdf->img->line->start.color = get_color(absolute(
+					(fdf->img->line->start.z) * fdf->cam->scale_z), fdf);
+		fdf->img->line->end.color = get_color(absolute(
+					(fdf->img->line->end.z) * fdf->cam->scale_z), fdf);
+	}
 	rotate(fdf->cam, fdf->img->line);
 	project(fdf->cam, fdf->img->line);
 	scale(fdf->img->line, fdf->cam->scale_factor);

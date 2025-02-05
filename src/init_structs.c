@@ -61,6 +61,7 @@ t_map	*init_map(void)
 	map->max_y = 0;
 	map->max_z = 0;
 	map->min_z = 0;
+	map->have_color = 0;
 	return (map);
 }
 
