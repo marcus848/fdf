@@ -14,6 +14,8 @@
 //
 void	free_all(t_fdf *fdf)
 {
+	if (fdf->menu)
+		free_menu(fdf);
 	if (fdf->map)
 		free_map(fdf->map);
 	if (fdf->img->img)
@@ -32,18 +34,12 @@ void	free_all(t_fdf *fdf)
 	exit (0);
 }
 
-t_cam	*free_cam(t_cam *cam)
+void	free_menu(t_fdf *fdf)
 {
-	free(cam);
-	return (NULL);
-}
-
-t_img	*free_img(t_img *img, void *mlx_ptr, void *img_ptr)
-{
-	mlx_destroy_image(mlx_ptr, img_ptr);
-	if (img->line)
-		free(img->line);
-	return (NULL);
+	if (fdf->menu && fdf->menu->sidebar_img)
+		mlx_destroy_image(fdf->mlx, fdf->menu->sidebar_img);
+	if (fdf->menu)
+		free(fdf->menu);
 }
 
 void	free_map(t_map *map)

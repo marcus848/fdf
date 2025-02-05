@@ -84,5 +84,17 @@ t_fdf	*start_fdf(void)
 	fdf->win_x = 0;
 	fdf->win_y = 0;
 	fdf->theme = BACKGROUND_DEFAULT;
+	fdf->menu = NULL;
 	return (fdf);
+}
+
+t_menu	*init_menu(void)
+{
+	t_menu	*menu;
+
+	menu = malloc(sizeof(t_menu));
+	menu->its_open = 1;
+	menu->sidebar_img = NULL;
+	menu->name = "./menu/dark.xpm";
+	return (menu);
 }

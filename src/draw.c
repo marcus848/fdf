@@ -38,14 +38,6 @@ void	drawline(t_point point1, t_point point2, t_fdf *fdf)
 	{
 		if (fdf->theme == LINE_DEFAULT)
 		{
-			// if (point1.color == LINE_DEFAULT)
-			// 	point1.color = BACKGROUND_DEFAULT;
-			// else
-			// 	point1.color = change_color(point1);
-			// if (point2.color == LINE_DEFAULT)
-			// 	point2.color = BACKGROUND_DEFAULT;
-			// else
-			// 	point2.color = change_color(point2);
 			point1.color = change_color(point1);
 			point2.color = change_color(point2);
 		}
@@ -65,4 +57,41 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 
 	dst = img->addr + (y * img->size_line + x * (img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
+}
+
+void	adjust_lightness(t_hsl *hsl)
+{
+	float	factor;
+
+	if (hsl->h >= 0.25 && hsl->h <= 0.40)
+		factor = 0.8;
+	else if (hsl->h >= 0.55 && hsl->h <= 0.70)
+		factor = 0.7;
+	else if ((hsl->h >= 0.0 && hsl->h <= 0.05)
+		|| (hsl->h >= 0.95 && hsl->h <= 1.0))
+		factor = 0.8;
+	else if (hsl->h >= 0.10 && hsl->h <= 0.20)
+		factor = 0.8;
+	else if (hsl->h >= 0.75 && hsl->h <= 0.85)
+		factor = 0.7;
+	else
+		factor = 0.75;
+	if (hsl->l > 0.8)
+		hsl->l *= factor;
+	else if (hsl->l > 0.6)
+		hsl->l *= (factor * 0.85);
+	else if (hsl->l > 0.4)
+		hsl->l *= (factor * 0.92);
+}
+
+void	adjust_color(t_hsl *hsl)
+{
+	if (hsl->h >= 0.25 && hsl->h <= 0.40)
+		hsl->h -= 0.02;
+	else if (hsl->h >= 0.55 && hsl->h <= 0.70)
+		hsl->h += 0.05;
+	else if (hsl->h >= 0.10 && hsl->h <= 0.20)
+		hsl->h += 0.05;
+	else if (hsl->h >= 0.75 && hsl->h <= 0.85)
+		hsl->h -= 0.02;
 }

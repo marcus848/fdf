@@ -22,7 +22,7 @@ void	rotate(t_cam *cam, t_line *line)
 void	rotate_x(t_line *line, double angle)
 {
 	t_point	new_start;
-	t_point new_end;
+	t_point	new_end;
 
 	new_start.y = line->start.y * cos(angle) - line->start.z * sin(angle);
 	new_start.z = line->start.y * sin(angle) + line->start.z * cos(angle);
@@ -37,7 +37,7 @@ void	rotate_x(t_line *line, double angle)
 void	rotate_y(t_line *line, double angle)
 {
 	t_point	new_start;
-	t_point new_end;
+	t_point	new_end;
 
 	new_start.x = line->start.x * cos(angle) - line->start.z * sin(angle);
 	new_start.z = line->start.x * sin(angle) + line->start.z * cos(angle);
@@ -52,7 +52,7 @@ void	rotate_y(t_line *line, double angle)
 void	rotate_z(t_line *line, double angle)
 {
 	t_point	new_start;
-	t_point new_end;
+	t_point	new_end;
 
 	new_start.x = line->start.x * cos(angle) - line->start.y * sin(angle);
 	new_start.y = line->start.x * sin(angle) + line->start.y * cos(angle);

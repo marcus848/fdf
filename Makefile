@@ -25,7 +25,7 @@ TEMP_MEN = .mensages
 
 # FILES
 FILES = main.c init_structs.c map_utils.c error.c map.c free_structs.c init_utils.c render.c transform.c draw.c \
-	utils.c projections.c frees.c color.c hooks.c rotate.c theme.c
+	utils.c projections.c frees.c color.c hooks.c rotate.c theme.c menu.c hooks2.c
 SRCS = $(addprefix $(SRC_DIR)/, $(FILES))
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -91,7 +91,7 @@ re: fclean all
 # ======== TESTES ========
 # Lista de arquivos de teste
 FILES_TESTS = started_mlx.c pixel_put.c my_pixel_put.c triangulo.c events_init.c key_hook.c mouse_hook.c move_hook.c \
-	      close_window.c paint.c loop_hook.c sync.c bresenham.c bre2.c resize.c 
+	      paint.c loop_hook.c sync.c bresenham.c resize.c testeIMG.c 
 SRC_TESTS = $(addprefix $(TESTS_DIR)/, $(FILES_TESTS))
 OBJ_TESTS = $(addprefix $(OBJ_DIR)/, $(FILES_TESTS:.c=.o))
 BIN_TESTS = $(addprefix $(BIN_DIR)/, $(FILES_TESTS:.c=))

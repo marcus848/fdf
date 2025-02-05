@@ -74,12 +74,9 @@ t_rgb	hsl2rgb(float h, float s, float l)
 		else
 			q = l + s - l * s;
 		p = 2 * l - q;
-		// result.r = hue2rgb(p, q, h + 1.0 / 3) * 255;
-		// result.g = hue2rgb(p, q, h) * 255;
-		// result.b = hue2rgb(p, q, h - 1.0 / 3) * 255;
-		result.r = fmaxf(0, fminf(255, hue2rgb(p, q, h + 1.0/3) * 255));
-		result.g = fmaxf(0, fminf(255, hue2rgb(p, q, h) * 255));
-		result.b = fmaxf(0, fminf(255, hue2rgb(p, q, h - 1.0/3) * 255));
+		result.r = hue2rgb(p, q, h + 1.0 / 3) * 255;
+		result.g = hue2rgb(p, q, h) * 255;
+		result.b = hue2rgb(p, q, h - 1.0 / 3) * 255;
 	}
 	return (result);
 }

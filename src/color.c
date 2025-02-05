@@ -58,7 +58,7 @@ int	change_color(t_point point)
 	int		color;
 
 	color = point.color;
-	hsl = rgb2hsl((color >> 16) & 0xFF,(color >> 8) & 0xFF, color & 0xFF);
+	hsl = rgb2hsl((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF);
 	if (hsl.l == 1)
 	{
 		hsl.s = 0.01;
@@ -72,40 +72,4 @@ int	change_color(t_point point)
 	}
 	rgb = hsl2rgb(hsl.h, hsl.s, hsl.l);
 	return ((rgb.r << 16) | (rgb.g << 8) | rgb.b);
-}
-void	adjust_lightness(t_hsl *hsl)
-{
-	float factor;
-
-	if (hsl->h >= 0.25 && hsl->h <= 0.40)
-		factor = 0.8;
-	else if (hsl->h >= 0.55 && hsl->h <= 0.70)
-		factor = 0.7;
-	else if ((hsl->h >= 0.0 && hsl->h <= 0.05) ||
-			(hsl->h >= 0.95 && hsl->h <= 1.0))
-		factor = 0.8;
-	else if (hsl->h >= 0.10 && hsl->h <= 0.20)
-		factor = 0.8;
-	else if (hsl->h >= 0.75 && hsl->h <= 0.85)
-		factor = 0.7;
-	else
-		factor = 0.75; 
-	if (hsl->l > 0.8)
-		hsl->l *= factor;
-	else if (hsl->l > 0.6)
-		hsl->l *= (factor * 0.85);
-	else if (hsl->l > 0.4)
-		hsl->l *= (factor * 0.92);
-}
-
-void	adjust_color(t_hsl *hsl)
-{
-	if (hsl->h >= 0.25 && hsl->h <= 0.40)
-		hsl->h -= 0.02;
-	else if (hsl->h >= 0.55 && hsl->h <= 0.70)
-		hsl->h += 0.05;
-	else if (hsl->h >= 0.10 && hsl->h <= 0.20)
-		hsl->h += 0.05;
-	else if (hsl->h >= 0.75 && hsl->h <= 0.85)
-		hsl->h -= 0.02;
 }

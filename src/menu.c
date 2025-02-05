@@ -14,5 +14,12 @@
 
 void	make_menu(t_fdf *fdf)
 {
-	return ;
+	int	width;
+	int	height;
+
+	if (!fdf->menu)
+		fdf->menu = init_menu();
+	fdf->menu->sidebar_img = mlx_xpm_file_to_image(fdf->mlx, fdf->menu->name,
+			&width, &height);
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->menu->sidebar_img, 0, 0);
 }

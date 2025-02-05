@@ -117,8 +117,9 @@ typedef struct s_cam
 
 typedef struct s_menu
 {
-	int	its_open;
-	t_img	img;
+	int		its_open;
+	void	*sidebar_img;
+	char	*name;
 }	t_menu;
 
 typedef struct s_fdf
@@ -146,6 +147,7 @@ typedef struct s_colors
 // main
 int		close_window(t_fdf *fdf);
 int		key_press(int keycode, t_fdf *fdf);
+int		mouse_press(int button, int x, int y, t_fdf *fdf);
 
 // init_structs
 t_fdf	*init_fdf(char *file_name);
@@ -158,6 +160,7 @@ t_cam	*init_cam(t_fdf *fdf);
 void	get_dimensions(char *file_name, t_map *map, t_fdf *fdf);
 t_point	**init_coordinates(int height, int width);
 t_fdf	*start_fdf(void);
+t_menu	*init_menu(void);
 
 // map
 t_map	*make_map(char *file_name, t_fdf *fdf);
@@ -180,8 +183,7 @@ void	free_line_gnl_with_line_char(int fd, char *line);
 // free_structs
 void	free_all(t_fdf *fdf);
 void	free_map(t_map *map);
-t_cam	*free_cam(t_cam *cam);
-t_img	*free_img(t_img *img, void *mlx_ptr, void *img_ptr);
+void	free_menu(t_fdf *fdf);
 
 // render
 void	render(t_fdf *fdf);
@@ -235,5 +237,8 @@ void	normalize_rgb(float *r, float *g, float *b, t_hsl *result);
 float	hue2rgb(float p, float q, float t);
 t_rgb	hsl2rgb(float h, float s, float l);
 void	calculate_hs(t_hsl *result, float r, float g, float b);
+
+// menu
+void	make_menu(t_fdf *fdf);
 
 #endif
